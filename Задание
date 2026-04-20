@@ -1,0 +1,48 @@
+graph = [
+    [0, 2, 0, 1, 0, 0, 0, 0, 0, 0],
+    [2, 0, 3, 2, 0, 0, 0, 0, 0, 0],
+    [0, 3, 0, 0, 7, 0, 0, 0, 0, 0],
+    [1, 2, 0, 0, 3, 6, 0, 0, 0, 0],
+    [0, 0, 7, 3, 0, 1, 5, 0, 0, 0],
+    [0, 0, 0, 6, 1, 0, 2, 0, 0, 0],
+    [0, 0, 0, 0, 5, 2, 0, 3, 0, 0],
+    [0, 0, 0, 0, 0, 0, 3, 0, 4, 0],
+    [0, 0, 0, 0, 0, 0, 0, 4, 0, 2],
+    [0, 0, 0, 0, 0, 0, 0, 0, 2, 0]
+]
+
+n = 10
+
+def dijkstra(start):
+    dist = [9999] * n   # расстояния
+    visited = [False] * n
+
+    dist[start] = 0
+
+    for _ in range(n):
+        # ищем минимальную вершину
+        min_value = 9999
+        u = -1
+
+        for i in range(n):
+            if not visited[i] and dist[i] < min_value:
+                min_value = dist[i]
+                u = i
+
+        visited[u] = True
+
+        # обновляем соседей
+        for v in range(n):
+            if graph[u][v] != 0:
+                if dist[u] + graph[u][v] < dist[v]:
+                    dist[v] = dist[u] + graph[u][v]
+
+    return dist
+
+# можно менять
+start = 5
+end = 7
+
+result = dijkstra(start)
+
+print("Кратчайшее расстояние:", result[end])
